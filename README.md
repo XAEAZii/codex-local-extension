@@ -1,4 +1,4 @@
-# CODEX-LOCAL 0.5.0-local.8
+# CODEX-LOCAL 0.5.0-local.9
 
 Prebuilt Linux x86-64 VS Code workspace extension for a self-hosted Responses API provider. It is intended to run in a remote Linux extension host and does not require an OpenAI or ChatGPT account.
 
@@ -19,26 +19,23 @@ Requirements:
 
 - VS Code 1.96.2 or newer on Windows;
 - Microsoft Remote - SSH extension;
-- a glibc-based Linux x86-64 remote host;
+- a Linux x86-64 remote host capable of starting the bundled runtime (the current build requires glibc 2.39);
 - a self-hosted provider implementing `POST /v1/responses`.
 
 ## Install on the remote Linux host
 
-First connect to the Linux host using VS Code Remote - SSH. Then open an integrated terminal in that remote window and run:
+While signed in to GitHub, download the `.vsix` and `SHA256SUMS` assets from the private `v0.5.0-local.9` release. Copy both files to the remote Linux host, connect using VS Code Remote - SSH, and run in its integrated terminal:
 
 ```bash
-VERSION=0.5.0-local.8
-RELEASE_URL="https://github.com/XAEAZii/codex-local-extension/releases/download/v${VERSION}"
-
-curl -fLO "${RELEASE_URL}/codex-local-${VERSION}-linux-x64.vsix"
-curl -fLO "${RELEASE_URL}/SHA256SUMS"
-
+VERSION=0.5.0-local.9
 sha256sum -c SHA256SUMS
 code --install-extension "codex-local-${VERSION}-linux-x64.vsix" --force
 code --list-extensions --show-versions | grep '^xaeazii.codex-local@'
 ```
 
 In VS Code run `Developer: Reload Window`, open CODEX-LOCAL, and configure the provider once.
+
+The bundled runtime is checked before the Codex engine starts. An incompatible architecture, glibc, dynamic loader, or missing shared library produces a blocking error instead of a broken session.
 
 The provider configuration is stored on the remote Linux host at:
 
@@ -62,4 +59,4 @@ code --uninstall-extension xaeazii.codex-local
 
 ## Local-only behavior
 
-Automatic OpenAI/ChatGPT discovery, hosted tools, update checks, telemetry, feedback, and remote-control features are disabled. Traffic is sent only to the explicitly configured self-hosted provider and user-configured MCP servers or commands.
+Automatic OpenAI/ChatGPT discovery, hosted tools, update checks, telemetry, feedback, and remote-control features are disabled. Traffic is sent only to the explicitly configured self-hosted provider and user-configured MCP servers or commands. The provider may be addressed by a loopback, LAN, routed-network, or remote hostname/IP and is reached through an authenticated loopback relay on the extension host.
