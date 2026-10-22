@@ -11,6 +11,10 @@ MCP server connections are available but untested and may not work fully yet.
 Download the Linux or WIN VSIX from this release and run in VS Code's integrated terminal (on the remote Linux host when using Remote - SSH):
 
 ```bash
+Windows:
+code --install-extension .\codex-local-0.6.0-local.11-win32-x64.vsix --force
+
+Linux:
 code --install-extension ./codex-local-0.6.0-local.9-linux-x64.vsix --force
 ```
 
