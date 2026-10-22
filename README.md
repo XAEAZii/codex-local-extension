@@ -18,4 +18,4 @@ Linux:
 code --install-extension ./codex-local-0.6.0-local.9-linux-x64.vsix --force
 ```
 
-Restart VS Code, open CODEX-LOCAL, and configure your provider.
+Restart VS Code, open CODEX-LOCAL, and configure your local provider with compatible /responses API endpoint.
